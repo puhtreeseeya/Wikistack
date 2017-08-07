@@ -20,8 +20,8 @@ app.use(morgan('dev'));
 // app.get('/', function(req, res) {
 //   res.sendFile(path.join(__dirname+'/views/index.html'));
 
-app.use(bodyparser.urlencoded({ extended: true})); 
-app.use(bodyparser.json()); 
+app.use(bodyparser.urlencoded({ extended: true}));
+app.use(bodyparser.json());
 
 // });
 app.use('/', router);
@@ -30,7 +30,8 @@ app.use('/', router);
 app.use(express.static(path.join(__dirname, '/public')));
 
 // sync the database tables
-tables.db.sync({force: true}).then(function() {
+// {force: true}
+tables.db.sync().then(function() {
   // start server
   app.listen(3000, function() {
     console.log("server is listening");

@@ -6,9 +6,9 @@ var db = new Sequelize('postgres://localhost:5432/wikistack', {
 
 var urlFormatter = function(pageTitle) {
     if(pageTitle) {
-       return pageTitle.replace(/\W/g, '').replace(/\s+/g, '_'); 
+       return pageTitle.replace(/\W/g, '').replace(/\s+/g, '_');
     } else {
-        return Math.random().toString(36).substring(2,7); 
+        return Math.random().toString(36).substring(2,7);
     }
 }
 
@@ -33,16 +33,16 @@ var Page = db.define('page', {
         defaultValue: Sequelize.NOW
     }
 
-}, 
+},
 {
   getterMethods: {
     route: function() {
       return '/wiki/' + this.urlTitle;
     }
-  }, 
+  },
   hooks: {
         beforeValidate: function(page, options) {
-            page.urlTitle = urlFormatter(page.title); 
+            page.urlTitle = urlFormatter(page.title);
         }
     }
 }
@@ -61,6 +61,8 @@ var User = db.define('user', {
         isEmail: true
     }
 });
+
+Page.belongsTo(User, { as: 'author' });
 
 module.exports = {
   db: db,
