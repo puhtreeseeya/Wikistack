@@ -25,6 +25,17 @@ router.get('/add', function(req, res, next) {
 	res.render('addPage');  
 }); 
 
+router.get('/:urlTitle', function(req, res, next) {
+	// res.send('hit dynamic route at ' + req.params.urlTitle); 
+	Page.findOne({
+		where: {
+			urlTitle : req.params.urlTitle
+		}
+	}).then(function(page) {
+		res.json(page); 
+	}).catch(next); 
+	
+}); 
 
 
 module.exports = router; 
