@@ -19,6 +19,10 @@ app.use(morgan('dev'));
 // serve up index file
 // app.get('/', function(req, res) {
 //   res.sendFile(path.join(__dirname+'/views/index.html'));
+
+app.use(bodyparser.urlencoded({ extended: true})); 
+app.use(bodyparser.json()); 
+
 // });
 app.use('/', router);
 
@@ -32,3 +36,4 @@ tables.db.sync({force: true}).then(function() {
     console.log("server is listening");
   })
 }).catch(console.error);
+
