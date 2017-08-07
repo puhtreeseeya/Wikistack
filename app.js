@@ -6,6 +6,7 @@ var morgan = require('morgan');
 var fs = require('fs');
 var path = require('path');
 var router = require('./routes');
+var tables = require('./models/index.js');
 
 // nunjucks configuration
 app.set('view engine', 'html'); // have res.render work with html files
@@ -24,7 +25,10 @@ app.use('/', router);
 // serve up static files
 app.use(express.static(path.join(__dirname, '/public')));
 
-// start server
-app.listen(3000, function() {
-  console.log("server is listening");
-});
+// sync the database tables
+tables.db.sync({force: true}).then(function() {
+  // start server
+  app.listen(3000, function() {
+    console.log("server is listening");
+  })
+}).catch(console.error);
